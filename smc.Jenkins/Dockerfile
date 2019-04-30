@@ -10,10 +10,10 @@ COPY . .
 WORKDIR "/src/smc.Jenkins"
 RUN dotnet build "smc.Jenkins.csproj" -c Release -o /app
 
-FROM build AS publish
+FROM build as publish
 RUN dotnet publish "smc.Jenkins.csproj" -c Release -o /app
 
-FROM base AS final
+FROM base as final
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "smc.Jenkins.dll"]
