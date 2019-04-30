@@ -1,8 +1,8 @@
-FROM docker.io/microsoft/dotnet:latest
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim as base
 WORKDIR /app
 EXPOSE 7000
 
-FROM docker.io/microsoft/dotnet:latest
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch as build
 WORKDIR /src
 COPY ["smc.Jenkins/smc.Jenkins.csproj", "smc.Jenkins/"]
 RUN dotnet restore "smc.Jenkins/smc.Jenkins.csproj"

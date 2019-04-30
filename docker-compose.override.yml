@@ -5,4 +5,4 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "7000"
+      - "5006:7000"
