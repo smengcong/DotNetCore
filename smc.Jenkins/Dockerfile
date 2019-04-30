@@ -1,8 +1,8 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM base:mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim 
 WORKDIR /app
 EXPOSE 7000
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+FROM build:mcr.microsoft.com/dotnet/core/sdk:2.2-stretch
 WORKDIR /src
 COPY ["smc.Jenkins/smc.Jenkins.csproj", "smc.Jenkins/"]
 RUN dotnet restore "smc.Jenkins/smc.Jenkins.csproj"
@@ -10,10 +10,10 @@ COPY . .
 WORKDIR "/src/smc.Jenkins"
 RUN dotnet build "smc.Jenkins.csproj" -c Release -o /app
 
-FROM build AS publish
+FROM publish:build 
 RUN dotnet publish "smc.Jenkins.csproj" -c Release -o /app
 
-FROM base AS final
+FROM final:base 
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "smc.Jenkins.dll"]
